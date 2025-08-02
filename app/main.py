@@ -35,7 +35,11 @@ class Ship:
 
     def fire(self, row: int, column: int) -> str:
         deck = self.get_deck(row, column)
-        if deck is None or not deck.is_alive:
+        if deck is None:
+            # This should not happen if called correctly from Battleship
+            raise ValueError(f"Deck at ({row}, {column}) not found in ship")
+
+        if not deck.is_alive:
             return "Already hit!"
 
         deck.is_alive = False
